@@ -18,7 +18,7 @@ const nextConfig = {
       's3.amazonaws.com',
       '127.0.0.1',
       'localhost',
-      'carparkingmanagement.s3.ap-southeast-1.amazonaws.com',
+      'voting-app-ritz.s3.ap-southeast-1.amazonaws.com',
       'lh3.googleusercontent.com',
       '127.0.0.1:8000',
     ],
