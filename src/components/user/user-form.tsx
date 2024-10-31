@@ -49,6 +49,7 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
             password: '',
             imageUrl: initialValues.imageUrl,
             role: String(initialValues.role),
+            isActive: Boolean(initialValues.isActive)
         } : DEFAULT_USER,
         resolver: yupResolver(userValidationSchema),
     });
@@ -60,14 +61,11 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
         control,
     } = methods;
 
-    console.log(initialValues)
-
     const onSubmit = async (values : FormValues) => {
         console.log(values);
         if(initialValues){
             updateUser({
                 id: initialValues.id,
-                isActive: initialValues.isActive,
                 ...values,
             })
         } else {
