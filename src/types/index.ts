@@ -75,6 +75,7 @@ export interface UserInput {
     password: string;
     imageUrl: Attachment | null;
     role: string;
+    isActive: boolean
 }
 
 export interface Vote {

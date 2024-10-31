@@ -20,7 +20,7 @@ type FormValues = {
     password: string;
     imageUrl: Attachment | null;
     role: string;
-    isActive: string;
+    isActive: boolean;
 }
 
 const DEFAULT_USER = {
@@ -29,7 +29,7 @@ const DEFAULT_USER = {
     password: '',
     imageUrl: null,
     role: '',
-    isActive: 'true'
+    isActive: true
 }
 
 type IProps = {
@@ -58,14 +58,16 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
         handleSubmit,
         formState: { errors },
         control,
-        getValues,
     } = methods;
+
+    console.log(initialValues)
 
     const onSubmit = async (values : FormValues) => {
         console.log(values);
         if(initialValues){
             updateUser({
                 id: initialValues.id,
+                isActive: initialValues.isActive,
                 ...values,
             })
         } else {
@@ -74,8 +76,6 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
             )
         }   
     }
-    
-    console.log(getValues());
 
     return (
         <FormProvider {...methods}>

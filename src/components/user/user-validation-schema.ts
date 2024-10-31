@@ -37,8 +37,5 @@ export const userValidationSchema = yup.object().shape({
                 .matches(imageUrlRegExp, 'Thumbnail image URL must end with .jpg, .jpeg, .png, .gif, .bmp, or .webp'),
         }),
     role: yup.string().required('Please select a role.'),
-    isActive: yup
-        .string()
-        .required('Status is required'),
 });
 
