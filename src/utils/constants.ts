@@ -2,7 +2,7 @@ import { atom } from "jotai";
 
 export const SUPER_ADMIN = 'Admin';
 export const STORE_OWNER = 'store_owner';
-export const STAFF = 'staff';
+export const STAFF = 'Staff';
 export const TOKEN = 'token';
 export const AUTH_CRED = 'AUTH_CRED';
 export const EMail_VERIFIED = 'emailVerified';

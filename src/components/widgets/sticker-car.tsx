@@ -1,39 +1,31 @@
 import React from 'react';
-import { IosArrowDown } from '@/components/icons/ios-arrow-down';
-import { IosArrowUp } from '@/components/icons/ios-arrow-up';
 import cn from 'classnames';
 import { useModalAction } from '../ui/modal/modal.context';
 
 interface StickerCardProps {
-  titleTransKey: string;
-  subtitleTransKey?: string;
   icon?: React.ReactNode;
-  price: string | number;
-  indicator?: 'up' | 'down';
-  indicatorText?: string;
-  note?: string;
-  link?: string;
-  linkText?: string;
   active?: boolean;
+  event_id: string;
+  user_id: string;
+  candidateInfo: any
 }
 
 const StickerCard = ({
-  titleTransKey,
-  subtitleTransKey,
   icon,
-  price,
-  indicator,
-  indicatorText,
-  note,
-  link,
-  linkText,
-  active
+  active,
+  event_id,
+  user_id,
+  candidateInfo
 }: StickerCardProps) => {
 
   const {openModal} = useModalAction();
 
   function handleChoose() {
-    openModal('CHOOSE_PERSON',1)
+    openModal('CHOOSE_PERSON',{
+      event_id,
+      candidate_id: candidateInfo.id,
+      user_id
+    })
   }
 
   return (
@@ -55,7 +47,7 @@ const StickerCard = ({
           </div>
           <div className="flex w-full">
             <span className="mb-1 text-md font-semibold opacity-90">
-              {"AUNG KYAW THU"}
+              {candidateInfo.name}
             </span>
           </div>
         </div>

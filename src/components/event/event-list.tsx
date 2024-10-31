@@ -1,20 +1,19 @@
-import { MappedPaginatorInfo, SortOrder, User } from "@/types"
+import { Event, MappedPaginatorInfo, SortOrder, User } from "@/types"
 import { useState } from "react";
 import Pagination from "../ui/pagination";
 import Table from "rc-table";
 import { NoDataFound } from "../icons/no-data-found";
 import { AlignType } from "../ui/table";
-import TitleWithSort from "../ui/title-with-sort";
 import LanguageSwitcher from "../ui/lang-action/action";
 import { Routes } from "@/config/routes";
 import Badge from "../ui/badge/badge";
 import Loader from "../ui/loader/loader";
 import { getAuthCredentials } from "@/utils/auth-utils";
-import { userPermission } from "@/utils/permission-utils";
 import { SUPER_ADMIN } from "@/utils/constants";
+import { useRouter } from "next/router";
 
 type IProps = {
-    users: User[];
+    events: Event[];
     paginatorInfo: MappedPaginatorInfo | null;
     onPagination: (current: number) => void;
     onSort: (current: any) => void;
@@ -22,17 +21,16 @@ type IProps = {
     loading: boolean
 }
 
-const UserList = ({
-    users,
+const EventList = ({
+    events,
     paginatorInfo,
     onPagination,
     onSort,
     onOrder,
     loading
 }: IProps) => {
-
+    const router = useRouter();
     const { permissions } = getAuthCredentials();
-
     const superAdmin = permissions?.includes(SUPER_ADMIN);
 
     const [sortingObj, setSortingObj] = useState<{
@@ -68,79 +66,83 @@ const UserList = ({
             render: (number: number) => `${number}`,
         },
         {
-            title: (
-                <TitleWithSort
-                  title={'Name'}
-                  ascending={
-                    sortingObj.sort === SortOrder.Asc && sortingObj.column === 'name'
-                  }
-                  isActive={sortingObj.column === 'name'}
-                />
-            ),
-            dataIndex: 'name',
-            key: 'name',
+            title: 'Title',
+            dataIndex: 'title',
+            key: 'title',
             align: 'left' as AlignType,
             width: 250,
             className: 'cursor-pointer',
-            onHeaderCell: () => onHeaderClick('name'),
-            render: (name: any, { email }: any) => (
+            onHeaderCell: () => onHeaderClick('title'),
+            render: (title: any) => (
                 <div className="flex items-center">
                     {/* <Avatar name={name} src={profile?.avatar?.thumbnail} /> */}
                     <div className="flex flex-col whitespace-nowrap font-medium ms-2">
-                        {name}
-                        <span className="text-[13px] font-normal text-gray-500/80">
-                        {email}
-                        </span>
+                        {title}
                     </div>
                 </div>
             ),
         },
         {
-            title: (
-                <TitleWithSort
-                  title={'Role'}
-                  ascending={
-                    sortingObj.sort === SortOrder.Asc && sortingObj.column === 'name'
-                  }
-                  isActive={sortingObj.column === 'role'}
-                />
-            ),
-            dataIndex: 'role',
-            key: 'role',
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
             align: 'left' as AlignType,
             width: 250,
             className: 'cursor-pointer',
-            onHeaderCell: () => onHeaderClick('role'),
-            render: (role: any) => (
+            onHeaderCell: () => onHeaderClick('description'),
+            render: (description: any) => (
                 <div className="flex items-center">
                     <span className="truncate whitespace-nowrap font-medium">
-                        {role}
+                        {description}
                     </span>
                 </div>
             ),
         },
         {
-            title: (
-              <TitleWithSort
-                title={('Status')}
-                ascending={
-                  sortingObj.sort === SortOrder.Asc &&
-                  sortingObj.column === 'isActive'
-                }
-                isActive={sortingObj.column === 'isActive'}
-              />
+            title: 'Start Date',
+            dataIndex: 'startDate',
+            key: 'startDate',
+            align: 'left' as AlignType,
+            width: 250,
+            className: 'cursor-pointer',
+            onHeaderCell: () => onHeaderClick('startDate'),
+            render: (startDate: any) => (
+                <div className="flex items-center">
+                    <span className="truncate whitespace-nowrap font-medium">
+                        {startDate}
+                    </span>
+                </div>
             ),
+        },
+        {
+            title: 'End Date',
+            dataIndex: 'endDate',
+            key: 'endDate',
+            align: 'left' as AlignType,
+            width: 250,
+            className: 'cursor-pointer',
+            onHeaderCell: () => onHeaderClick('endDate'),
+            render: (endDate: any) => (
+                <div className="flex items-center">
+                    <span className="truncate whitespace-nowrap font-medium">
+                        {endDate}
+                    </span>
+                </div>
+            ),
+        },
+        {
+            title: 'Status',
             width: 150,
             className: 'cursor-pointer',
-            dataIndex: 'isActive',
+            dataIndex: 'status',
             key: 'isActive',
             align: 'center' as AlignType,
-            onHeaderCell: () => onHeaderClick('isActive'),
-            render: (is_active: boolean) => (
+            onHeaderCell: () => onHeaderClick('status'),
+            render: (status: boolean) => (
               <Badge
-                textKey={is_active ? 'Active' : 'Inactive'}
+                textKey={status ? 'Active' : 'Inactive'}
                 color={
-                  is_active
+                    status
                     ? '!text-green-700 bg-green-400/30'
                     : 'bg-status-failed/10 text-status-failed'
                 }
@@ -155,12 +157,13 @@ const UserList = ({
                     key: 'actions',
                     align: 'right' as AlignType,
                     width: 120,
-                    render: (slug: string, record: User) => (
+                    render: (slug: string, record: Event) => (
                         <LanguageSwitcher
-                        slug={record.id}
-                        record={record}
-                        deleteModalView={superAdmin ? "DELETE_USER" : undefined}
-                        routes={superAdmin ? Routes?.user : undefined}
+                            slug={record.id}
+                            record={record}
+                            deleteModalView={superAdmin ? "DELETE_EVENT" : undefined}
+                            routes={superAdmin ? Routes?.event : undefined}
+                            detailsUrl={superAdmin ? `${router.asPath}/${record.id}` : undefined}
                         />
                     ),
                 },
@@ -183,7 +186,7 @@ const UserList = ({
                             <p className="text-[13px]">{'Empty Table Text'}</p>
                         </div>
                     )}
-                    data={users}
+                    data={events}
                     rowKey="id"
                     scroll={{ x: 1000 }}
                 />
@@ -203,4 +206,4 @@ const UserList = ({
 
 }
 
-export default UserList;
+export default EventList;

@@ -13,13 +13,13 @@ interface Props {
 
 const CandidateCard = ({
     user,
-    name = 'candidates',
+    name = 'candidate',
 } : Props ) => {
 
     const { setValue, control } = useFormContext();
 
     const candidatesGroup = useWatch({
-        name: `candidates`,
+        name: `candidate`,
         control
     });
 
@@ -32,10 +32,10 @@ const CandidateCard = ({
     
         if (checked) {
             const newCandidates = [...currentCandidates, user.id];
-            setValue('candidates', newCandidates);
+            setValue('candidate', newCandidates);
         } else {
             const newCandidates = currentCandidates.filter((id: string) => id !== user.id);
-            setValue('candidates', newCandidates);
+            setValue('candidate', newCandidates);
         }
 
         setIsEnabled(checked);

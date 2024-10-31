@@ -1,23 +1,24 @@
+
+import CreateOrUpdateEventForm from '@/components/event/event-form';
 import Layout from '@/components/layouts/admin';
 import ErrorMessage from "@/components/ui/error-message";
 import Loader from "@/components/ui/loader/loader";
-import UserCreateOrUpdateForm from "@/components/user/user-form";
 import { Routes } from '@/config/routes';
-import { useUserQuery } from "@/data/user";
+import { useEventQuery } from '@/data/event';
 import { getAuthCredentials, hasAccess, isAuthenticated } from '@/utils/auth-utils';
 import { SUPER_ADMIN } from '@/utils/constants';
 import { GetServerSideProps } from 'next';
 import { useRouter } from "next/router";
 
-export default function UpdateUser() {
+export default function UpdateEvent() {
     const { query } = useRouter();
 
     const { 
-        user, 
+        event, 
         isLoading: loading, 
         error 
-    } = useUserQuery({
-        slug: query.userSlug as string,
+    } = useEventQuery({
+        slug: query.eventSlug as string,
     });
 
     if(loading) return <Loader text={('Loading')} />;
@@ -27,19 +28,19 @@ export default function UpdateUser() {
         <>
             <div className="flex border-b border-dashed border-border-base pb-5 md:pb-7">
                 <h1 className="text-lg font-semibold text-heading">
-                    {'Edit User'}
+                    {'Edit Event'}
                 </h1>
             </div>
-            <UserCreateOrUpdateForm initialValues={user}/>
+            <CreateOrUpdateEventForm initialValues={event}/>
         </>
     )
 }
 
-UpdateUser.authenticate = {
+UpdateEvent.authenticate = {
     permissions: [SUPER_ADMIN]
 }
 
-UpdateUser.Layout = Layout
+UpdateEvent.Layout = Layout
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
     

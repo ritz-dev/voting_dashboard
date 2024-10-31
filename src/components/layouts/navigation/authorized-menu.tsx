@@ -1,16 +1,23 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Avatar from "@/components/common/avatar";
 import { siteSettings } from "@/settings/site.setting";
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import cn from 'classnames';
 import Link from "next/link";
 import { getIcon } from "@/utils/get-icon";
 import * as sidebarIcons from '@/components/icons/sidebar';
 import { useMeQuery } from "@/data/user";
 import { User } from "@/types";
+import { useUser } from "@/contexts/me.context";
 
 export default function AuthorizedMenu () {
     const { data } = useMeQuery();
+    const { updateUser } = useUser();
+
+    useEffect(()=> {
+        data && updateUser(data)
+    },[data])
 
     return (
         <Menu

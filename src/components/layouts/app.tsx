@@ -14,6 +14,5 @@ export default function AppLayout({
         return <AdminLayout {...props} /> 
     }
 
-    return <UserLayout {...props}/>;
+    return null;
 }
-

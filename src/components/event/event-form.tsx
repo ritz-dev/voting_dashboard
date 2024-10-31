@@ -16,19 +16,25 @@ import { eventValidationSchema } from "./event-validation-scheme";
 import DatePickerInput from "../ui/date-picker-range";
 import CandidateCard from "./candidate-card";
 import EventStatusInput from "./event-status-input";
+import { useCreateEventMutation } from "@/data/event";
+import { useUserQuery, useUsersQuery } from "@/data/user";
 
 type FormValues = {
     slug: string;
     title: string;
     description: any;
-    candidates: string[];    
+    startDate: Date;
+    endDate: Date;
+    candidate: string[];    
     status: string;
 }
 
 const DEFAULT_EVEMT = {
     title:'',
     description: '',
-    candidates:[],
+    startDate: new Date(),
+    endDate: new Date(),
+    candidate:[],
     status:'upcoming'
 }
 
@@ -40,29 +46,17 @@ const CreateOrUpdateEventForm = ({ initialValues }:  IProps ) => {
 
     const router = useRouter();
 
-    const { mutate: createRole, isLoading: creating } = useCreateRoleMutation();
-    const { mutate: updateRole, isLoading: updating } = useUpdateRoleMutation();
+    const { mutate: createEvent, isLoading: creating } = useCreateEventMutation();
+    const { mutate: updateEvent, isLoading: updating } = useUpdateRoleMutation();
 
+    const { users, loading, error} = useUsersQuery({});
 
-    const user = {
-        name: 'Aung Kyaw Thu',
-        email: 'aungkyawthu@ritz.com.mm',
-        id: '213213',
-        imageUrl: {
-            thumbnail: '',
-            original: '',
-            id: 0,
-            file_name: '',
-        },
-        role: 'admin'
-    }
-    
     // const { permissions } = getAuthCredentials();
     
     const methods= useForm<FormValues>({
             defaultValues: initialValues
                 ? {
-                    ...initialValues
+                    ...initialValues,
                 }
                 : DEFAULT_EVEMT,
             //@ts-ignore
@@ -74,21 +68,16 @@ const CreateOrUpdateEventForm = ({ initialValues }:  IProps ) => {
     
     const onSubmit = async (values: FormValues) => {
 
-        const input = {
-            ...values,
-            description: values.description === undefined ? null : values.description
+        if(initialValues) {
+            updateEvent({
+                id: initialValues.id,
+                ...values,
+            });
+        } else {
+            createEvent({
+                ...values,
+            })
         }
-
-        // if(initialValues) {
-        //     updateRole({
-        //         id: initialValues.id,
-        //         ...input,
-        //     });
-        // } else {
-        //     createRole({
-        //         ...input,
-        //     })
-        // }
     }
     
     return (
@@ -119,13 +108,13 @@ const CreateOrUpdateEventForm = ({ initialValues }:  IProps ) => {
                                 label="Start Date"
                                 control={control}
                                 required={true}
-                                name="dob"
+                                name="startDate"
                             />
                             <DatePickerInput 
                                 label="End Date"
                                 control={control}
                                 required={true}
-                                name="dob"
+                                name="endDate"
                             />
                         </div>
                         <EventStatusInput
@@ -142,10 +131,13 @@ const CreateOrUpdateEventForm = ({ initialValues }:  IProps ) => {
                     />
                     <Card className="w-full sm:w-8/12 md:w-2/3">
                         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2 mt-5">
-                            {/* <CandidateCard user={user}/>
-                            <CandidateCard user={user}/>
-                            <CandidateCard user={user}/>
-                            <CandidateCard user={user}/> */}
+                            {
+                                users?.map((user,index)=>{
+                                    return (
+                                        <CandidateCard user={user} key={index}/>
+                                    )
+                                })
+                            }
                         </div>
                     </Card>
                 </div>

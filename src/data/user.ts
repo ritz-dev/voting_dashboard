@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { AUTH_CRED } from "@/utils/constants";
 import { mapPaginatorData } from "@/utils/data-mappers";
 import { toast } from "react-toastify";
+import { useUser } from "@/contexts/me.context";
 
 export const useMeQuery = () => {
     const queryClient = useQueryClient();
@@ -24,6 +25,7 @@ export const useMeQuery = () => {
             }
             if(router.pathname === Routes.verifyEmail) {
                 setEmailVerified(true);
+
                 router.replace(Routes.dashboard);
             }
         },

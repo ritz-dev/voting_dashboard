@@ -1,17 +1,19 @@
-import { useDeleteRoleMutation } from "@/data/role";
 import ConfirmationCard from "../common/confirmation-card"
 import { useModalAction, useModalState } from "../ui/modal/modal.context"
 import { getErrorMessage } from "@/utils/form-error";
+import { useVotedMutation } from "@/data/vote";
+import { useUser } from "@/contexts/me.context";
 
-const RoleDeleteView = () => {
-    const { mutate:deleteRole, isLoading: loading} = 
-        useDeleteRoleMutation();
+const VotedView = () => {
+    const { mutate:createVote, isLoading: loading} = 
+        useVotedMutation();
+
     const { data } = useModalState();
     const { closeModal } = useModalAction();
 
     async function handleDelete() {
         try{
-            deleteRole({ id: data });
+            createVote(data);
             closeModal();
         } catch (error) {
             closeModal();
@@ -28,4 +30,4 @@ const RoleDeleteView = () => {
     )
 }
 
-export default RoleDeleteView;
+export default VotedView;

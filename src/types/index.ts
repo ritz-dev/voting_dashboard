@@ -36,9 +36,12 @@ export interface Role {
 
 export interface Event {
     id:string;
-    name: string;
+    title: string;
     description: string;
-    candidates: string[];
+    startDate: Date;
+    endDate: Date;
+    candidate: any;
+    status: string;
 }
 
 export interface AuthResponse {
@@ -57,12 +60,33 @@ export interface LoginInput {
     password: string;
 }
 
+export interface EventInput {
+    title: string;
+    description: string;
+    startDate: Date;
+    endDate: Date;
+    candidate: string[];
+    status: string;
+}
+
 export interface UserInput {
     name: string;
     email: string;
     password: string;
     imageUrl: Attachment | null;
     role: string;
+}
+
+export interface Vote {
+    candidate_id: string;
+    event_id: string;
+    user_id: string;
+}
+
+export interface VoteInput {
+    candidate_id: string;
+    event_id: string;
+    user_id: string;
 }
 
 export interface Records{
@@ -108,6 +132,12 @@ export interface  RoleQueryOptions extends Omit<QueryOptions, 'language'> {
     is_active?: boolean;
 }
 
+export interface  EventQueryOptions extends Omit<QueryOptions, 'language'> {
+    name: string;
+    parent: number | null;
+    is_active?: boolean;
+}
+
 export interface UserQueryOptions extends Omit<QueryOptions, 'language'> {
     name: string;
     search: string;
@@ -147,5 +177,7 @@ export interface MappedPaginatorInfo {
 }
 
 export interface RolePaginator extends PaginatorInfo<Role> {}
+
+export interface EventPaginator extends PaginatorInfo<Event> {}
 
 export interface UserPaginator extends PaginatorInfo<User> {}

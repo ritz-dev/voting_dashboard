@@ -3,14 +3,14 @@ import Layout from '@/components/layouts/admin';
 import PageHeading from "@/components/common/page-heading";
 import { getAuthCredentials, hasAccess, isAuthenticated } from "@/utils/auth-utils";
 import { Routes } from "@/config/routes";
-import RoleList from "@/components/role/role-list";
 import { useState } from "react";
 import { SortOrder } from "@/types";
-import { useRolesQuery } from "@/data/role";
 import Loader from "@/components/ui/loader/loader";
 import ErrorMessage from "@/components/ui/error-message";
 import { GetServerSideProps } from 'next';
-import { rolePermission } from "@/utils/permission-utils";
+import { SUPER_ADMIN } from "@/utils/constants";
+import EventList from "@/components/event/event-list";
+import { useEventsQuery } from "@/data/event";
 
 export default function AllRolesPage() {
 
@@ -18,7 +18,7 @@ export default function AllRolesPage() {
     const [page, setPage] = useState(1);
     const [orderBy, setOrder] = useState('created_at');
     const [sortedBy,  setColumn] = useState<SortOrder>(SortOrder.Asc);
-    const { roles, paginatorInfo, loading, error} = useRolesQuery({
+    const { events, paginatorInfo, loading, error} = useEventsQuery({
         name: searchTerm,
         limit: 10,
         page,
@@ -44,19 +44,20 @@ export default function AllRolesPage() {
                     <PageHeading title={'Events'} />
                 </div>
             </Card>
-            <RoleList
-                roles={roles}
+            <EventList
+                events={events}
                 paginatorInfo={paginatorInfo}
                 onPagination={handlePagination}
                 onOrder={setOrder}
                 onSort={setColumn}
+                loading={loading}
             />
         </>
     );
 }
 
 AllRolesPage.authenticate = {
-    permissions: rolePermission
+    permissions: [SUPER_ADMIN]
 };
 
 AllRolesPage.Layout = Layout;
@@ -66,7 +67,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const generateRedirectUrl = Routes.denied;  
     const {token, permissions} = getAuthCredentials(ctx);
 
-    if(!isAuthenticated({token, permissions}) || !hasAccess(rolePermission, permissions)) {
+    if(!isAuthenticated({token, permissions}) || !hasAccess([SUPER_ADMIN], permissions)) {
       return {
         redirect:{
           destination: generateRedirectUrl,

@@ -1,30 +1,15 @@
 import Card from '@/components/common/card';
-import PageHeading from '@/components/common/page-heading';
-import Layout from '@/components/layouts/admin';
+import AppLayout from '@/components/layouts/app';
 import { Routes } from '@/config/routes';
-import { SortOrder } from '@/types';
-import { getAuthCredentials, hasAccess, isAuthenticated } from "@/utils/auth-utils";
+import { allowedRoles, getAuthCredentials, hasAccess, isAuthenticated } from "@/utils/auth-utils";
 import { cardRecordPermission } from '@/utils/permission-utils';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
-import { useState } from 'react';
 
 export default function ProfileUpdate() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [page, setPage] = useState(1);
-    const [orderBy, setOrder] = useState('cardId');
-    const [sortedBy,  setColumn] = useState<SortOrder>(SortOrder.Asc);
-
-    function handleSearch({ searchText }: { searchText:string }) {
-        setSearchTerm(searchText);
-    }
-
-    function handlePagination(current:any) {
-        setPage(current);
-    }
 
     return (
-    <>
+    <div className='w-1/3 mx-auto'>
         <Card className="mb-8 flex flex-col items-center justify-center md:flex-row">
             <Image
                 className="w-36 h-full object-cover"
@@ -39,22 +24,22 @@ export default function ProfileUpdate() {
                 </span>
             </div>
         </Card>
-    </>
+    </div>
   )
 }
 
 ProfileUpdate.authenticate = {
-    permissions: cardRecordPermission
+    permissions: allowedRoles
 }
 
-ProfileUpdate.Layout = Layout
+ProfileUpdate.Layout = AppLayout
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     const generateRedirectUrl = Routes.login;
     const {token, permissions} = getAuthCredentials(ctx);
     
-    if(!isAuthenticated({token, permissions}) || !hasAccess(cardRecordPermission, permissions)) {
+    if(!isAuthenticated({token, permissions}) || !hasAccess(allowedRoles, permissions)) {
       return {
         redirect:{
           destination: generateRedirectUrl,

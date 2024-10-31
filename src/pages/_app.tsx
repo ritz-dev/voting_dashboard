@@ -11,6 +11,7 @@ import { ModalProvider } from "@/components/ui/modal/modal.context";
 import ManagedModal from "@/components/ui/modal/managed-modal";
 import { UIProvider } from "@/contexts/ui.context";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "@/contexts/me.context";
 
 const Noop: React.FC<{children?: React.ReactNode}> = ({ children }) => (
   <>{children}</>
@@ -29,24 +30,26 @@ const CustomApp = ({ Component, pageProps }: AppPropsWithLayout) => {
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps?.dehydratedState}>
-          <UIProvider>
-            <ModalProvider>
-              <DefaultSeo/>
-              { authProps ? (
-                <PrivateRoute authProps={authProps}>
+          <UserProvider>
+            <UIProvider>
+              <ModalProvider>
+                <DefaultSeo/>
+                { authProps ? (
+                  <PrivateRoute authProps={authProps}>
+                    <Layout {...pageProps}>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </PrivateRoute>
+                ) : (
                   <Layout {...pageProps}>
                     <Component {...pageProps} />
                   </Layout>
-                </PrivateRoute>
-              ) : (
-                <Layout {...pageProps}>
-                  <Component {...pageProps} />
-                </Layout>
-              )}
-              <ToastContainer autoClose={2000} theme="colored"/>
-              <ManagedModal />
-            </ModalProvider>
-          </UIProvider>
+                )}
+                <ToastContainer autoClose={2000} theme="colored"/>
+                <ManagedModal />
+              </ModalProvider>
+            </UIProvider>
+          </UserProvider>
         </Hydrate>
       </QueryClientProvider>
     </React.StrictMode> 

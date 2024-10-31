@@ -70,7 +70,7 @@ const PasswordInput = React.forwardRef<HTMLInputElement, Props>(
                     label={label}
                     required={required}
                     className={twMerge(
-                        styleType === 'type-1' && "absolute -top-2 left-3 bg-white z-50 px-1 text-sm font-medium",
+                        styleType === 'type-1' && "absolute -top-2 left-3 bg-white z-10 px-1 text-sm font-medium",
                         styleType === 'type-2' && "font-semibold leading-none text-body-dark text-lg",
                     )}
                 />

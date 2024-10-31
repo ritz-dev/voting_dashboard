@@ -8,7 +8,7 @@ import { useUsersQuery } from '@/data/user';
 import { getAuthCredentials, hasAccess, isAuthenticated } from '@/utils/auth-utils';
 import { GetServerSideProps } from 'next';
 import { Routes } from "@/config/routes";
-import { userPermission } from '@/utils/permission-utils';
+import { SUPER_ADMIN } from '@/utils/constants';
 
 export default function AllUsersPage() {
 
@@ -36,7 +36,7 @@ export default function AllUsersPage() {
         <>
             <Card className="mb-8 flex flex-col items-center md:flex-row">
                 <div className="mb-4 md:mb-0 md:w-1/4">
-                    <PageHeading title={'Users'} />
+                    <PageHeading title={'Staff Lists'} />
                 </div>
             </Card>
             <UserList
@@ -52,7 +52,7 @@ export default function AllUsersPage() {
 }
 
 AllUsersPage.authenticate = {
-    permissions: userPermission
+    permissions: [SUPER_ADMIN]
 }
 
 AllUsersPage.Layout = Layout
@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     const generateRedirectUrl = Routes.denied;  
     const {token, permissions} = getAuthCredentials(ctx);
 
-    if(!isAuthenticated({token, permissions}) || !hasAccess(userPermission, permissions)) {
+    if(!isAuthenticated({token, permissions}) || !hasAccess([SUPER_ADMIN], permissions)) {
       return {
         redirect:{
           destination: generateRedirectUrl,

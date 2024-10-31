@@ -12,7 +12,7 @@ interface Props {
 
 const UserRoleInput = ({ control, error}: Props) => {
     
-    const { roles, loading : rolesLoading } = useRolesQuery({
+    const { roles } = useRolesQuery({
         limit:200,
     });
 

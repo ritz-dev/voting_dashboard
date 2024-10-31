@@ -6,6 +6,7 @@ export const Routes = {
     verifyEmail: '/verify-email',
     verifyLicense: '/verify-license',
     denied: '/denied',
+    voted: '/voted',
     user: {
         ...routesFactory('/users'),
     },
@@ -13,7 +14,7 @@ export const Routes = {
         ...routesFactory('/roles'),
     },
     event: {
-        ...routesFactory('/event'),
+        ...routesFactory('/events'),
     }
 };
 
