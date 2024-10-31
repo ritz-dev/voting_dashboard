@@ -58,10 +58,11 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
         handleSubmit,
         formState: { errors },
         control,
+        getValues,
     } = methods;
 
     const onSubmit = async (values : FormValues) => {
-
+        console.log(values);
         if(initialValues){
             updateUser({
                 id: initialValues.id,
@@ -74,6 +75,8 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
         }   
     }
     
+    console.log(getValues());
+
     return (
         <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} noValidate>

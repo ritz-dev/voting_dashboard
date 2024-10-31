@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { imageUrlRegExp, passwordRules, phoneRegExp } from '@/utils/constants';
+import { imageUrlRegExp, passwordRules } from '@/utils/constants';
 
 export const userValidationSchema = yup.object().shape({
     name: yup.string().required('Name is Required!'),
