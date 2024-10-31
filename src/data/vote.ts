@@ -26,13 +26,13 @@ export const useVotedMutation = () => {
     // );
 
     const onSubmit = (value: string) => {
+        console.log(value);
         myVoted(
             {
                 user_id: value || ''
             },
             {
                 onSuccess: (data) => {
-                    console.log(data)
                     setUserVoted(data);
                 },
                 onError: () => {
@@ -50,7 +50,7 @@ export const useVotedMutation = () => {
                     router.push(Routes.dashboard);
                     // Trigger the dependent mutation after the first one succeeds
                     // myVoted.mutate(data.user_id); // Pass necessary data for `myVoted`
-                    onSubmit(data.user_id)
+                    onSubmit(data.data.user_id)
                 }
                 toast.success('Successfully Voted', {
                     toastId: 'successVoted',

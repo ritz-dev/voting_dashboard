@@ -4,7 +4,7 @@ import { curdFactory } from "./crud-factory";
 import { HttpClient } from "./http-client";
 
 export const voteClient = {
-    ...curdFactory<Vote, QueryOptions, VoteInput>(API_ENDPOINTS.VOTED),
+    ...curdFactory<any, QueryOptions, VoteInput>(API_ENDPOINTS.VOTED),
     myVoted: (variables: {user_id: string}) => {
         return HttpClient.post<string>(API_ENDPOINTS.MYVOTED, variables);
     },
