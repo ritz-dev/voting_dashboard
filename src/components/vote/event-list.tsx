@@ -11,7 +11,7 @@ export default function EventList({ events }: { events: any }) {
             ) : events.status === 'upcoming' ? (
                 <div className="text-base-dark/80">This event is coming soon.</div>
             ) : (
-                <div className="grid w-full gap-5 grid-cols-1 2xl:grid-cols-3">
+                <div className="grid w-full gap-5 grid-cols-1 md:grid-cols-2 2xl:grid-cols-3">
                     {events.candidate?.map((candi: any, index: number) => {
 
                         const isMatch =  Array.isArray(userVoted) ? userVoted?.filter((vote: any)=> vote.event_id === events.id).some((item:any) => item.candidate_id === candi.id) : false;
