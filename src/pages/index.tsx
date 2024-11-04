@@ -11,6 +11,7 @@ const AdminDashboard = dynamic(()=> import('@/components/dashboard/admin'));
 export default function Dashboard() {
   const {permissions} = getAuthCredentials();
   if(hasAccess(allowedRoles, permissions)) {
+    console.log('hi');
     return <AdminDashboard />;
   }
   return <AccessDeniedPage />;
