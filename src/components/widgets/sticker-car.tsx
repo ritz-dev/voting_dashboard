@@ -1,6 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { useModalAction } from '../ui/modal/modal.context';
+import Image from 'next/image';
 
 interface StickerCardProps {
   icon?: React.ReactNode;
@@ -28,6 +29,8 @@ const StickerCard = ({
     })
   }
 
+  console.log(candidateInfo)
+
   return (
     <div
       className={cn(
@@ -43,7 +46,7 @@ const StickerCard = ({
       <div className="mb-auto flex w-full items-center justify-between">
         <div className='flex items-center'>
           <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded bg-gray-100/80 me-5">
-            {icon}
+            {/* <Image src={candidateInfo.}/> */}
           </div>
           <div className="flex w-full">
             <span className="mb-1 text-md font-semibold opacity-90">

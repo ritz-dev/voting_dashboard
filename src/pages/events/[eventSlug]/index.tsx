@@ -1,5 +1,4 @@
 
-import CreateOrUpdateEventForm from '@/components/event/event-form';
 import Layout from '@/components/layouts/admin';
 import ErrorMessage from "@/components/ui/error-message";
 import Loader from "@/components/ui/loader/loader";
@@ -11,9 +10,11 @@ import dayjs from 'dayjs';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
 
 export default function DetailUser() {
     const { query } = useRouter();
+    const [mostVoted,setMostVoted] = useState<any>({});
 
     const { 
         event, 
@@ -22,6 +23,15 @@ export default function DetailUser() {
     } = useEventQuery({
         slug: query.eventSlug as string,
     });
+
+    useEffect(()=>{
+        const mostVote = event?.candidate.reduce((max:any, candidate: any) =>
+            candidate.vote_count > max.vote_count ? candidate : max
+          );
+        setMostVoted(mostVote);
+    },[event])
+
+    console.log(event)
 
     if(loading) return <Loader text={('Loading')} />;
     if(error) return <ErrorMessage message={error?.message as string} />;
@@ -35,12 +45,37 @@ export default function DetailUser() {
             </div>
             <div className="max-w-full mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
             {/* Event Details */}
-                <div className="mb-6 p-6 border-b border-dashed">
-                    <h1 className="text-3xl font-bold text-gray-800 mb-4">{event?.title}</h1>
-                    <p className="text-gray-600 mb-6">{event?.description}</p>
-                    <div className="text-gray-600">
-                    <p className='mb-4'><span className="font-semibold">Start Date:</span> {dayjs(event?.startDate).format('MMMM D, YYYY')}</p>
-                    <p><span className="font-semibold">End Date:</span> {dayjs(event?.endDate).format('MMMM D, YYYY')}</p>
+                <div className="mb-6 p-6 border-b border-dashed flex justify-between">
+                    <div>
+                        <h1 className="text-3xl font-bold text-gray-800 mb-4">{event?.title}</h1>
+                        <p className="text-gray-600 mb-6">{event?.description}</p>
+                        <div className="text-gray-600">
+                        <p className='mb-4'><span className="font-semibold">Start Date:</span> {dayjs(event?.startDate).format('MMMM D, YYYY')}</p>
+                        <p><span className="font-semibold">End Date:</span> {dayjs(event?.endDate).format('MMMM D, YYYY')}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="flex h-full items-center bg-gray-50 p-4 rounded-lg shadow">
+                            {mostVoted?.imageUrl ? (
+                            <Image
+                                src={mostVoted?.imageUrl.url}
+                                alt={mostVoted?.imageUrl.alt}
+                                className="w-36 h-16 rounded-full mr-4"
+                            />
+                            ) : (
+                            <div className="w-32 h-full rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
+                                N/A
+                            </div>
+                            )}
+                            <div>
+                                <h1 className="text-3xl font-bold text-gray-800 mb-4">Most Voted Person</h1>
+                                <div className='w-full flex justify-between'>
+                                    <p className="text-lg font-semibold text-gray-700">{mostVoted?.name}</p>
+                                    <p className="text-gray-600 font-semibold pr-4">{mostVoted?.vote_count} <span className='text-accent-600 ml-4'>Voted</span></p>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
 

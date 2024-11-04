@@ -34,6 +34,10 @@ export interface Role {
     permission: string[];
 }
 
+export interface candidates {
+    
+}
+
 export interface Event {
     id:string;
     title: string;

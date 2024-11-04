@@ -28,6 +28,8 @@ export default function Dashboard () {
         );
     };
 
+    console.log(events)
+
     useEffect(() => {
         onSubmit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
