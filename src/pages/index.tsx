@@ -1,6 +1,5 @@
 import AppLayout from '@/components/layouts/app';
 import dynamic from "next/dynamic";
-import Layout from '@/components/layouts/admin';
 import { GetServerSideProps } from "next";
 import { allowedRoles, getAuthCredentials, hasAccess, isAuthenticated } from "@/utils/auth-utils";
 import { Routes } from "@/config/routes";
@@ -17,7 +16,7 @@ export default function Dashboard() {
   return <AccessDeniedPage />;
 }
 
-Dashboard.Layout = Layout;
+Dashboard.Layout = AppLayout;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const generateRedirectUrl = Routes.login;
