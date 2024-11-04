@@ -2,7 +2,6 @@ import Card from '@/components/common/card';
 import AppLayout from '@/components/layouts/app';
 import { Routes } from '@/config/routes';
 import { allowedRoles, getAuthCredentials, hasAccess, isAuthenticated } from "@/utils/auth-utils";
-import { cardRecordPermission } from '@/utils/permission-utils';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 

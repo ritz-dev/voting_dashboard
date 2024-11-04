@@ -1,5 +1,6 @@
 import AppLayout from '@/components/layouts/app';
 import dynamic from "next/dynamic";
+import Layout from '@/components/layouts/admin';
 import { GetServerSideProps } from "next";
 import { allowedRoles, getAuthCredentials, hasAccess, isAuthenticated } from "@/utils/auth-utils";
 import { Routes } from "@/config/routes";
@@ -11,13 +12,12 @@ const AdminDashboard = dynamic(()=> import('@/components/dashboard/admin'));
 export default function Dashboard() {
   const {permissions} = getAuthCredentials();
   if(hasAccess(allowedRoles, permissions)) {
-    console.log('hi');
     return <AdminDashboard />;
   }
   return <AccessDeniedPage />;
 }
 
-Dashboard.Layout = AppLayout;
+Dashboard.Layout = Layout;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const generateRedirectUrl = Routes.login;
@@ -33,8 +33,6 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   return {
-    props: {
-      userPermissions: permissions
-    }
+    props: {}
   }
 }
