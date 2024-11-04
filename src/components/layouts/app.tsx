@@ -3,22 +3,23 @@ import { SUPER_ADMIN } from "@/utils/constants";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
-const AdminLayout = dynamic(()=> import('@/components/layouts/admin'));
-const UserLayout = dynamic(()=> import('@/components/layouts/user'));
+const AdminLayout = dynamic(() => import('@/components/layouts/admin'));
+const UserLayout = dynamic(() => import('@/components/layouts/user'));
 
-export default function AppLayout({
-    ...props
-}) {
-    const {permissions} = getAuthCredentials();
-    const [isPermission,setIsPermission] = useState(false);
+export default function AppLayout({ ...props }) {
+    const [isMounted, setIsMounted] = useState(false);
+    const [isPermission, setIsPermission] = useState(false);
 
-    useEffect(()=> {
-        permissions && setIsPermission(permissions?.includes(SUPER_ADMIN));
-    },[permissions])
+    useEffect(() => {
+        setIsMounted(true); // Set mounted state to true after client-side mount
+        const { permissions } = getAuthCredentials();
+        setIsPermission(permissions?.includes(SUPER_ADMIN) || false); // Ensure boolean value
+    }, []);
 
-    if(isPermission) {
-        return <AdminLayout {...props} /> 
+    if (!isMounted) {
+        // Avoid rendering any layout until mounted on the client
+        return null;
     }
 
-    return <UserLayout {...props}/>;
+    return isPermission ? <AdminLayout {...props} /> : <UserLayout {...props} />;
 }
