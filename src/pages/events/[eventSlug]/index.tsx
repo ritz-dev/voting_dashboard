@@ -25,7 +25,7 @@ export default function DetailUser() {
     });
 
     useEffect(()=>{
-        const mostVote = event?.candidate.reduce((max:any, candidate: any) =>
+        const mostVote = event?.candidate?.reduce((max:any, candidate: any) =>
             candidate.vote_count > max.vote_count ? candidate : max
           );
         setMostVoted(mostVote);
@@ -61,6 +61,8 @@ export default function DetailUser() {
                                 src={mostVoted?.imageUrl.url}
                                 alt={mostVoted?.imageUrl.alt}
                                 className="w-36 h-16 rounded-full mr-4"
+                                width={100}
+                                height={100}
                             />
                             ) : (
                             <div className="w-32 h-full rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
@@ -86,12 +88,14 @@ export default function DetailUser() {
                         <div key={index} className="flex items-center bg-gray-50 p-4 rounded-lg shadow">
                             {candidate.imageUrl ? (
                             <Image
-                                src={candidate.imageUrl.url}
-                                alt={candidate.imageUrl.alt}
+                                src={candidate.imageUrl.thumbnail}
+                                alt={''}
                                 className="w-16 h-16 rounded-full mr-4"
+                                width={100}
+                                height={100}
                             />
                             ) : (
-                            <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
+                            <div className="w-20 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
                                 N/A
                             </div>
                             )}

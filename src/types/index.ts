@@ -35,7 +35,7 @@ export interface Role {
 }
 
 export interface candidates {
-    
+
 }
 
 export interface Event {
@@ -44,9 +44,16 @@ export interface Event {
     description: string;
     startDate: Date;
     endDate: Date;
-    candidate: any;
+    candidate: candidate[];
     status: string;
 }
+
+export interface candidate {
+    id: string;
+    imageUrl: Attachment;
+    name: string;
+    user_id: string;
+} 
 
 export interface AuthResponse {
     token: string;

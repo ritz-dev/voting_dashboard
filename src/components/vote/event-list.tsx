@@ -21,6 +21,7 @@ export default function EventList({ events }: { events: any }) {
                                 key={index}
                                 event_id={events.id}
                                 candidateInfo={candi}
+                                imageUrl={candi?.imageUrl?.thumbnail}
                                 user_id={user?.id || ''}
                                 active={isMatch}
                             />
