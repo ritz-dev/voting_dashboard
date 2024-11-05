@@ -31,7 +31,7 @@ export default function DetailUser() {
         setMostVoted(mostVote);
     },[event])
 
-    console.log(mostVoted)
+    console.log(mostVoted);
 
     if(loading) return <Loader text={('Loading')} />;
     if(error) return <ErrorMessage message={error?.message as string} />;
@@ -61,7 +61,7 @@ export default function DetailUser() {
                                 src={mostVoted?.imageUrl.thumbnail}
                                 alt={''}
                                 className="w-36 h-16 rounded-full mr-4"
-                                width={100}
+                                width={20}
                                 height={100}
                             />
                             ) : (
