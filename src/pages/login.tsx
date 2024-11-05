@@ -5,6 +5,7 @@ import { getAuthCredentials, isAuthenticated } from "@/utils/auth-utils";
 import { GetServerSideProps } from "next";
 
 export default function LoginPage() {
+
   return(
       <AuthPageLayout>
           <h3 className="mb-6 mt-4 text-center text-base italic text-body">
@@ -13,6 +14,7 @@ export default function LoginPage() {
           <LoginForm />
       </AuthPageLayout>
   )
+   
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -32,4 +34,5 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       props: {}
     }
-  }
+
+}

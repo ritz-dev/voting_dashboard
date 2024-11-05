@@ -29,6 +29,7 @@ const LoginForm = () => {
             {
                 onSuccess: (data) => {
                     if(data?.token) {
+                        console.log(data)
                         // if (hasAccess(allowedRoles, data?.permissions)) {
                             setAuthCredentials(data?.token, data?.permissions, data?.role);
                             Router.push(Routes.dashboard);

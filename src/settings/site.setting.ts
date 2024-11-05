@@ -94,25 +94,25 @@ export const siteSettings = {
           "Event": {
             href: '',
             label: 'event-management',
-            icon: 'AdminListIcon',
+            icon: 'OrdersIcon',
             childMenu:[
               { 
                 mainTag:'event',
                 href: '',
                 label: 'Event',
-                icon: 'AdminListIcon',
+                icon: 'OrdersIcon',
                 childMenu: [
                   {
                     tag:'event-read',
                     href: Routes.event.list,
                     label: 'All Event',
-                    icon: 'AdminListIcon',
+                    icon: 'OrdersIcon',
                   },
                   {
                     tag:'event-create',
                     href: Routes.event.create,
                     label: 'Add New Event',
-                    icon: 'AdminListIcon',
+                    icon: 'OrdersIcon',
                   }
                 ]
               },
