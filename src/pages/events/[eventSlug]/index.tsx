@@ -60,7 +60,7 @@ export default function DetailUser() {
                             <Image
                                 src={mostVoted?.imageUrl.thumbnail}
                                 alt={''}
-                                className="w-36 h-16 rounded-full mr-4"
+                                className="w-36 h-16 rounded-full mr-4 object-cover"
                                 width={20}
                                 height={100}
                             />
