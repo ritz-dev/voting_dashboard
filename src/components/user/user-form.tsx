@@ -77,6 +77,7 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
     }
 
     console.log(getValues());
+    console.log(errors)
 
     return (
         <FormProvider {...methods}>
