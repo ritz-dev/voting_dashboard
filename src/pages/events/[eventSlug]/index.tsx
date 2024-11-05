@@ -83,7 +83,7 @@ export default function DetailUser() {
 
             {/* Candidates List */}
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Candidates</h2>
-                <div className="grid grid-cols-2 xl:grid-cols-3 gap-5">
+                <div className="grid grid-cols-2 2xl:grid-cols-3 gap-5">
                     {event?.candidate?.map((candidate: any, index: number) => (
                         <div key={index} className="flex items-center bg-gray-50 p-4 rounded-lg shadow">
                             {candidate.imageUrl ? (
