@@ -59,6 +59,7 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
         handleSubmit,
         formState: { errors },
         control,
+        getValues,
     } = methods;
 
     const onSubmit = async (values : FormValues) => {
@@ -74,6 +75,8 @@ const UserCreateOrUpdateForm = ({ initialValues }: IProps) => {
             )
         }   
     }
+
+    console.log(getValues());
 
     return (
         <FormProvider {...methods}>
