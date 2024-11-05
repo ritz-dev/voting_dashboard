@@ -1,8 +1,8 @@
 import { atom } from "jotai";
 
-export const SUPER_ADMIN = 'Admin';
+export const SUPER_ADMIN = '9d5fd9ac-8ac8-4754-a950-7c33a9f035c5';
 export const STORE_OWNER = 'store_owner';
-export const STAFF = 'Staff';
+export const STAFF = '9d5fd9ac-90fa-4f7c-8b85-9a7399944384';
 export const TOKEN = 'token';
 export const AUTH_CRED = 'AUTH_CRED';
 export const EMail_VERIFIED = 'emailVerified';

@@ -87,17 +87,17 @@ export default function DetailUser() {
                     {event?.candidate?.map((candidate: any, index: number) => (
                         <div key={index} className="flex items-center bg-gray-50 p-4 rounded-lg shadow">
                             {candidate.imageUrl ? (
-                            <Image
-                                src={candidate.imageUrl.thumbnail}
-                                alt={''}
-                                className="w-16 h-16 rounded-full mr-4"
-                                width={100}
-                                height={100}
-                            />
+                                <Image
+                                    src={candidate.imageUrl.thumbnail}
+                                    alt={''}
+                                    className="w-16 h-16 rounded-full mr-4"
+                                    width={100}
+                                    height={100}
+                                />
                             ) : (
-                            <div className="w-20 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
-                                N/A
-                            </div>
+                                <div className="w-20 h-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 mr-4">
+                                    N/A
+                                </div>
                             )}
                             <div className='w-full flex justify-between'>
                                 <p className="text-lg font-semibold text-gray-700">{candidate.name}</p>
