@@ -15,16 +15,22 @@ export default function EventList({ events }: { events: any }) {
                     {events.candidate?.map((candi: any, index: number) => {
 
                         const isMatch =  Array.isArray(userVoted) ? userVoted?.filter((vote: any)=> vote.event_id === events.id).some((item:any) => item.candidate_id === candi.id) : false;
-
+                        const notME = candi.user_id === user?.id
                         return(
-                            <StickerCard
-                                key={index}
-                                event_id={events.id}
-                                candidateInfo={candi}
-                                imageUrl={candi?.imageUrl?.thumbnail}
-                                user_id={user?.id || ''}
-                                active={isMatch}
-                            />
+                            <>
+                                {
+                                    notME ? null : (
+                                        <StickerCard
+                                            key={index}
+                                            event_id={events.id}
+                                            candidateInfo={candi}
+                                            imageUrl={candi?.imageUrl?.thumbnail}
+                                            user_id={user?.id || ''}
+                                            active={isMatch}
+                                        />
+                                    )
+                                }
+                            </>
                         )})}
                 </div>
             )}
