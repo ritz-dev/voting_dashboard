@@ -16,7 +16,7 @@ import { eventValidationSchema } from "./event-validation-scheme";
 import DatePickerInput from "../ui/date-picker-range";
 import CandidateCard from "./candidate-card";
 import EventStatusInput from "./event-status-input";
-import { useCreateEventMutation } from "@/data/event";
+import { useCreateEventMutation, useUpdateEventMutation } from "@/data/event";
 import { useUserQuery, useUsersQuery } from "@/data/user";
 
 type FormValues = {
@@ -34,7 +34,6 @@ const DEFAULT_EVEMT = {
     description: '',
     startDate: new Date(),
     endDate: new Date(),
-    candidate:[],
     status:'upcoming'
 }
 
@@ -47,7 +46,7 @@ const CreateOrUpdateEventForm = ({ initialValues }:  IProps ) => {
     const router = useRouter();
 
     const { mutate: createEvent, isLoading: creating } = useCreateEventMutation();
-    const { mutate: updateEvent, isLoading: updating } = useUpdateRoleMutation();
+    const { mutate: updateEvent, isLoading: updating } = useUpdateEventMutation();
 
     const { users, loading, error} = useUsersQuery({});
 
@@ -166,7 +165,7 @@ const CreateOrUpdateEventForm = ({ initialValues }:  IProps ) => {
                                         {('Update')}
                                     </span>
                                     <span className="hidden sm:block">
-                                        {('Update Role')}
+                                        {('Update Event')}
                                     </span>
                                 </>
                                 ) : ('Save')}

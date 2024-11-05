@@ -33,16 +33,19 @@ export const useCreateEventMutation = () => {
     });
 }
 
-export const useUpdateEvnetMutation = () => {
+export const useUpdateEventMutation = () => {
     
     const router = useRouter();
     const queryClient = useQueryClient();
 
     return useMutation(eventClient.update, {
         onSuccess: async (data) => {
-            await router.push(`/${API_ENDPOINTS.EVENTS}/${data?.id}/edit`, undefined, {
-                locale: Config.defaultLanguage
-            })
+            if (data) {
+                router.push(Routes.event.list);
+            }
+            toast.success(('Successfully Update'), {
+                toastId: 'successUpdate',
+            });
         },
         onSettled: () => {
             queryClient.invalidateQueries(API_ENDPOINTS.EVENTS);
